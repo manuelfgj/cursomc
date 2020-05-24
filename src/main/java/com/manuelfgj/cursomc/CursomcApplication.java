@@ -1,5 +1,6 @@
 package com.manuelfgj.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,24 @@ import com.manuelfgj.cursomc.domain.Cidade;
 import com.manuelfgj.cursomc.domain.Cliente;
 import com.manuelfgj.cursomc.domain.Endereco;
 import com.manuelfgj.cursomc.domain.Estado;
+import com.manuelfgj.cursomc.domain.Pagamento;
+import com.manuelfgj.cursomc.domain.PagamentoComBoleto;
+import com.manuelfgj.cursomc.domain.PagamentoComCartao;
+import com.manuelfgj.cursomc.domain.Pedido;
 import com.manuelfgj.cursomc.domain.Produto;
+import com.manuelfgj.cursomc.domain.enuns.EstadoPagamento;
 import com.manuelfgj.cursomc.domain.enuns.TipoCliente;
 import com.manuelfgj.cursomc.repositories.CategoriaRepository;
 import com.manuelfgj.cursomc.repositories.CidadeRepository;
 import com.manuelfgj.cursomc.repositories.ClienteRepository;
 import com.manuelfgj.cursomc.repositories.EnderecoRepository;
 import com.manuelfgj.cursomc.repositories.EstadoRepository;
+import com.manuelfgj.cursomc.repositories.PagamentoRepository;
+import com.manuelfgj.cursomc.repositories.PedidoRepository;
 import com.manuelfgj.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
-public class CursomcApplication implements CommandLineRunner{
+public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -36,11 +44,15 @@ public class CursomcApplication implements CommandLineRunner{
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
-	
+
 	@Override
 	public void run(String... args) throws Exception{
 		Categoria cat1 = new Categoria(null, "Informatica");
@@ -83,6 +95,23 @@ public class CursomcApplication implements CommandLineRunner{
 
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+				
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);		
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);		
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+				
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));			
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
 	}
 
