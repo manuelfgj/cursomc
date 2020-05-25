@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.manuelfgj.cursomc.domain.enuns.EstadoPagamento;
 /* Obs: Para heranca decidimos usar o InheritanceType.JOINED 
  * que gera 2 tabelas no banco, mas nesse caso como as sub-classes 
@@ -28,7 +28,9 @@ public abstract class Pagamento implements Serializable{
 	
 	private Integer estado;
 	
-	@JsonBackReference
+	//E o mais correto em usar mas foi substituido por suspeitas de problemas
+	//@JsonBackReference subst por @JsonIgnore
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
