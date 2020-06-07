@@ -1,7 +1,5 @@
 package com.manuelfgj.cursomc.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 
 import com.manuelfgj.cursomc.domain.enuns.EstadoPagamento;

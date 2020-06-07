@@ -21,6 +21,7 @@ public class Endereco implements Serializable{
 	private String logradouro;
 	private String numero;
 	private String bairro;
+	private String complemento;
 	private String cep;
 	
 	@ManyToOne
@@ -37,12 +38,13 @@ public class Endereco implements Serializable{
 	public Endereco() {		
 	}
 
-	public Endereco(Integer id, String logradouro, String numero, String bairro, String cep, Cidade cidade, Cliente cliente) {
+	public Endereco(Integer id, String logradouro, String numero, String bairro,  String complemento, String cep, Cidade cidade, Cliente cliente) {
 		super();
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.bairro = bairro;
+		this.complemento = complemento;
 		this.cep = cep;
 		this.setCidade(cidade);
 		this.cliente = cliente;
@@ -102,6 +104,14 @@ public class Endereco implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	@Override

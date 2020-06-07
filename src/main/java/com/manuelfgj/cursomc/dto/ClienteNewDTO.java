@@ -2,21 +2,49 @@ package com.manuelfgj.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.manuelfgj.cursomc.services.validation.ClientInsert;
+
+@ClientInsert
 public class ClienteNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message = "Preechimento obrigatorio")
+	@Length(min=5,max=120, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
+	
+	@NotEmpty(message = "Preechimento obrigatorio")
+	@Email(message = "Email inválido")
 	private String email;
-	private String cfpCnpj;
+	
+	//Se fosse apenas CPF ou CNPJ poderia usar @CPF ou @CNPJ
+	@NotEmpty(message = "Preechimento obrigatorio")
+	private String cpfCnpj;
+	
 	private Integer tipo;
 	
+	@NotEmpty(message = "Preechimento obrigatorio")
 	private String logradouro;
+	
+	@NotEmpty(message = "Preechimento obrigatorio")
 	private String numero;
+	
 	private String bairro;
+	
+	private String complemento;
+	
+	@NotEmpty(message = "Preechimento obrigatorio")
 	private String cep;
 	
+	@NotEmpty(message = "Preechimento obrigatorio")
 	private String telefone1;
+	
 	private String telefone2;
+	
 	private String telefone3;
 	
 	private Integer cidadeId;
@@ -40,12 +68,12 @@ public class ClienteNewDTO implements Serializable{
 		this.email = email;
 	}
 
-	public String getCfpCnpj() {
-		return cfpCnpj;
+	public String getCpfCnpj() {
+		return cpfCnpj;
 	}
 
-	public void setCfpCnpj(String cfpCnpj) {
-		this.cfpCnpj = cfpCnpj;
+	public void setCpfCnpj(String cpfCnpj) {
+		this.cpfCnpj = cpfCnpj;
 	}
 
 	public Integer getTipo() {
@@ -78,6 +106,14 @@ public class ClienteNewDTO implements Serializable{
 
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
+	}
+	
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	public String getCep() {

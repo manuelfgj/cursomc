@@ -27,7 +27,7 @@ public class Cliente implements Serializable{
 	private Integer id;
 	private String nome;
 	private String email;
-	private String cfpCnpj;
+	private String cpfCnpj;
 	private Integer tipo;
 	
 	//E o mais correto em usar mas foi removido por suspeitas de problemas
@@ -53,7 +53,7 @@ public class Cliente implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.cfpCnpj = cfpCnpj;
+		this.cpfCnpj = cfpCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
@@ -81,12 +81,12 @@ public class Cliente implements Serializable{
 		this.email = email;
 	}
 
-	public String getCfpCnpj() {
-		return cfpCnpj;
+	public String getCpfCnpj() {
+		return cpfCnpj;
 	}
 
-	public void setCfpCnpj(String cfpCnpj) {
-		this.cfpCnpj = cfpCnpj;
+	public void setCpfCnpj(String cfpCnpj) {
+		this.cpfCnpj = cfpCnpj;
 	}
 
 	public TipoCliente getTipo() {
