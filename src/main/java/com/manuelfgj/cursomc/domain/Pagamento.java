@@ -11,6 +11,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.manuelfgj.cursomc.domain.enuns.EstadoPagamento;
 /* Obs: Para heranca decidimos usar o InheritanceType.JOINED 
  * que gera 2 tabelas no banco, mas nesse caso como as sub-classes 
@@ -20,6 +22,11 @@ import com.manuelfgj.cursomc.domain.enuns.EstadoPagamento;
 */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value=PagamentoComBoleto.class, name="pagamentoComBoleto"),
+    @JsonSubTypes.Type(value=PagamentoComCartao.class, name="pagamentoComCartao"),
+})
 public abstract class Pagamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
